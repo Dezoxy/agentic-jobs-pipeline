@@ -1,0 +1,19 @@
+{
+  "name": "agentic-jobs-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Agent-driven job-aggregation pipeline: two Claude CLI invocations on a systemd timer, publishing to a static Cloudflare Worker.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "node scripts/validate.mjs",
+    "fetch": "node scripts/fetch-sources.mjs",
+    "filter-browser": "node scripts/filter-browser.mjs",
+    "liveness": "node scripts/check-liveness.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "license": "MIT"
+}

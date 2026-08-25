@@ -1,0 +1,33 @@
+{
+  // Static assets + one deliberately tiny API: GET/PUT /api/tracker, a single
+  // KV blob that syncs the application tracker across devices (added
+  // 2026-08-07 — before that this Worker was static-assets-only, and the
+  // "nothing to attack server-side" stance in README.md dates from then).
+  // Deployed by Cloudflare Workers Builds on push to main.
+  //
+  // Asset requests never reach the script (run_worker_first is off), so the
+  // Worker code only ever sees non-asset paths: /api/* and 404s.
+  //
+  // Terraform boundary: this script is owned by Workers Builds.
+  // Terraform (the separate cloudflare repo) must NOT declare a
+  // cloudflare_workers_script for "jobs-dashboard" — it may only own
+  // the DNS record, the custom domain binding and the Access application.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jobs-dashboard",
+  "compatibility_date": "2026-07-01",
+  "main": "src/worker.js",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page",
+    "binding": "ASSETS"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "TRACKER",
+      "id": "<your-kv-namespace-id>"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

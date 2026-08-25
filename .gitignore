@@ -1,0 +1,12 @@
+node_modules/
+.wrangler/
+.cache/
+.dev.vars
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+
+# Local Claude Code session config (browser preview launcher)
+.claude/
